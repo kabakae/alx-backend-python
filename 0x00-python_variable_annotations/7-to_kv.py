@@ -3,9 +3,9 @@
 7-to_kv Module
 ==============
 
-This module contains the function `to_kv` which takes a string and an integer
-or float as arguments and returns a tuple. The first element of the tuple is the
-string, and the second element is the square of the integer/float, annotated as a float.
+This module contains the function `to_kv` which takesring and an integer
+or float as arguments and returns a tuple. The first elemehe tuple is the
+string, and the second element is the square of the integer/floats a float.
 """
 
 from typing import Union, Tuple
@@ -13,7 +13,7 @@ from typing import Union, Tuple
 
 def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """
-    Returns a tuple where the first element is the string k, and the second element
+    Returns a tuple where the first element is the string k, and the second el
     is the square of the int/float v, represented as a float.
 
     Parameters:
