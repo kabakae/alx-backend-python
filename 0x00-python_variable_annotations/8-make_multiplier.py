@@ -22,9 +22,9 @@ def make_multiplier(multiplier: float) -> Callable[[float], float]:
     Returns:
     --------
     Callable[[float], float]
-        A function that takes a float and returns the product of the float 
+        A function that takes a float and returns the product of the float
     """
     def multiplier_function(value: float) -> float:
         return value * multiplier
-    
+
     return multiplier_function
