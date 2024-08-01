@@ -4,7 +4,7 @@
 =======================
 
 This module contains the function `element_length` which takes an iterable of
-sequences as an argument and returns a list of tuples. Each tuple contains a 
+sequences as an argument and returns a list of tuples. Each tuple contains a
 sequence and its length.
 """
 
