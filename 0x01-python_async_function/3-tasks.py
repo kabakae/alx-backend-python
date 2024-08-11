@@ -7,6 +7,7 @@ the wait_random coroutine from 0-basic_async_syntax.
 import asyncio
 from basic_async_syntax import wait_random
 
+
 def task_wait_random(max_delay: int) -> asyncio.Task:
     """
     Create an asyncio.Task for the wait_random coroutine.
