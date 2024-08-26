@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-This module contains unit tests for the utils.access_nested_map function.
+test_utils.py
+
+Unit tests for the access_nested_map function in the utils module.
 """
 
 import unittest
-from typing import Dict, Tuple, Any
 from parameterized import parameterized
 from utils import access_nested_map
 
@@ -17,20 +18,29 @@ class TestAccessNestedMap(unittest.TestCase):
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2),
     ])
-    def test_access_nested_map(self, nested_map: Dict[str, Any], path: Tuple[str, ...], expected: Any) -> None:
-        """Test that access_nested_map returns the expected result."""
+    def test_access_nested_map(
+        self, nested_map: dict, path: tuple, expected: object
+    ) -> None:
+        """
+        Test that access_nested_map returns the expected value
+        for given nested_map and path.
+        """
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
-        ({}, ("a",)),
-        ({"a": 1}, ("a", "b")),
+        ({}, ("a",), "'a'"),
+        ({"a": 1}, ("a", "b"), "'b'"),
     ])
-    def test_access_nested_map_exception(self, nested_map: Dict[str, Any], path: Tuple[str, ...]) -> None:
-        """Test that access_nested_map raises a KeyError with the expected message."""
-        with self.assertRaises(KeyError) as cm:
+    def test_access_nested_map_exception(
+        self, nested_map: dict, path: tuple, expected: str
+    ) -> None:
+        """
+        Test that access_nested_map raises a KeyError with the expected message
+        for invalid paths in the nested_map.
+        """
+        with self.assertRaisesRegex(KeyError, expected):
             access_nested_map(nested_map, path)
-        self.assertEqual(str(cm.exception), str(path[-1]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
