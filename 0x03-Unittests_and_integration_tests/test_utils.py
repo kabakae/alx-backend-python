@@ -2,13 +2,13 @@
 """
 test_utils.py
 
-This module contains unit tests for the utils.get_json function.
+This module contains unit tests for the utils.get_json and utils.memoize.
 """
 
 import unittest
 from unittest.mock import patch, Mock
 from parameterized import parameterized
-from utils import get_json
+from utils import get_json, memoize  # Ensurand match your utils module
 
 
 class TestGetJson(unittest.TestCase):
@@ -18,22 +18,41 @@ class TestGetJson(unittest.TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
     ])
-    @patch('utils.requests.get')
+    @patch('utils.requests.get')  # Correct the patch target if needed
     def test_get_json(self, test_url, test_payload, mock_get):
         """Test that get_json returns the expected result."""
-        # Create a mock response object with a .json method that returns test_payload
         mock_response = Mock()
         mock_response.json.return_value = test_payload
         mock_get.return_value = mock_response
 
-        # Call get_json with the test_url
         result = get_json(test_url)
 
-        # Assert that the mock_get was called exactly once with test_url
         mock_get.assert_called_once_with(test_url)
-
-        # Assert that the result is equal to test_payload
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """Test cases for the memoize function."""
+
+    def test_memoize(self):
+        """Test that memoize caches the result of a method call."""
+        class TestClass:
+            def a_method(self):
+                return 42
+
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        obj = TestClass()
+
+        with patch.object(obj, 'a_method', return_value=42) as mock_method:
+            result1 = obj.a_property
+            result2 = obj.a_property
+
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)
+            mock_method.assert_called_once()
 
 
 if __name__ == "__main__":
